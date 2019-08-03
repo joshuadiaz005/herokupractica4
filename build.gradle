@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '4.0.4'
+}
+
+group 'com.pucmm.edu'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+mainClassName = "Main"
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile "com.sparkjava:spark-core:2.6.0"
+    compile "com.sparkjava:spark-template-freemarker:2.5.5"
+    compile "org.slf4j:slf4j-simple:1.7.21"
+    compile 'com.sparkjava:spark-debug-tools:0.5'
+}
+
+
+shadowJar {
+    baseName = 'Practica2_Actualizada'
+    classifier = null
+    version = null
+}
+
+/**
+ * tarea necesaria para heroku si optamos por la tarea de InstallDist
+ * en el archivo Procfile debe estar el siguiente comando:
+ * web: sh build/install/sparkjava_demo/bin/sparkjava_demo
+ */
+/*task stage {
+    dependsOn installDist
+}*/
+
+/**
+ * tarea necesaria para heroku si optamos por la tarea de Shadowjar
+ * en el archivo Procfile debe estar el siguiente comando:
+ * web: java -jar build/libs/sparkjava_demo.jar
+ */
+task stage {
+    dependsOn shadowJar
+}
